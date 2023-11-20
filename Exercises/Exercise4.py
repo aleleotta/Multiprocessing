@@ -1,2 +1,2 @@
-from multiprocessing import Process
+from multiprocessing import *
 
