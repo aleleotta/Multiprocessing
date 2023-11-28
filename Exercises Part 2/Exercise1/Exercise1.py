@@ -17,7 +17,7 @@ if __name__ == "__main__":
     print("Counting...\n\n")
     vocals = ["a", "e", "i", "o", "u"]
     for vocal in vocals:
-        process = Process(target=readVocals, args=vocal)
+        process = Process(target=readVocals, args=vocal) #The process can always have the same name because every process that is created gets a different PID.
         process.start()
     process.join()
     print(time.time())
