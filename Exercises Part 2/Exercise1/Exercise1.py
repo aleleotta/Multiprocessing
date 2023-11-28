@@ -7,8 +7,8 @@ def readVocals(vocalSelect):
     file = open(filePath, "r")
     vocals = file.read().lower()
     file.close()
+    count = 0
     for vocal in vocals:
-        count = 0
         if vocal == vocalSelect:
             count = count + 1
     print(count)
