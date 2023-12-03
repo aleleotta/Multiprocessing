@@ -7,19 +7,19 @@ def randomIp(connection):
     num3 = randint(0, 255)
     num4 = randint(0, 255)
     ip = str(num1)+"."+str(num2)+"."+str(num3)+"."+str(num4)
-    tuple = (ip, num1)
-    connection.send(tuple)
+    pack = (ip, num1)
+    connection.send(pack)
     connection.close()
 
 def receiveIp(connection, connection1):
-    tuple = connection.recv()
-    connection1.send(tuple)
+    pack = connection.recv()
+    connection1.send(pack)
     connection.close()
     connection1.close()
 
 def ipClassifier(connection):
-    tuple = connection.recv()
-    ip, num1 = tuple
+    pack = connection.recv()
+    ip, num1 = pack
     ipClass = "Class not identified"
     if num1 > 0 and num1 < 128:
         ipClass = "Class A"
@@ -38,7 +38,7 @@ def ipClassifier(connection):
 if __name__ == "__main__":
     left, right = Pipe()
     left1, right1 = Pipe()
-    for i in range(50):
+    for i in range(100):
         p1 = Process(target=randomIp, args=(left,))
         p2 = Process(target=receiveIp, args=(right, left1))
         p3 = Process(target=ipClassifier, args=(right1,))

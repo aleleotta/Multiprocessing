@@ -1,4 +1,59 @@
 from multiprocessing import *
+from random import uniform
+import os
+
+def generateRandoms(connection, filePath, studentName):
+    collection = []
+    for i in range(6):
+        num = uniform(0, 10)
+        collection.append(num)
+    writer = open(filePath, "w")
+    for num in collection:
+        writer.write(str(num) + "\n")
+    pack = (filePath, studentName)
+    connection.send(pack)
+    writer.close()
+
+def calcAverage(connection, connection1):
+    pack = connection.recv()
+    filePath, studentName = pack
+    doc = open(filePath, "r")
+    numCollection = doc.readlines()
+    doc.close()
+    sum = 0
+    count = 0
+    for num in numCollection:
+        sum = sum + round(float(num))
+        count = count + 1
+    average = sum / count
+    filePath = "Exercises Part 2\\Exercise3\\averages.txt"
+    doc = open(filePath, "a")
+    doc.write(str(average) + " " + studentName + "\n")
+    doc.close()
+    connection1.send(filePath)
+
+def findMax(connection):
+    filePath = connection.recv()
+
+if __name__ == "__main__":
+    os.remove("Exercises Part 2\\Exercise3\\averages.txt")
+    filePath = "Exercises Part 2\\Exercise3"
+    studentName = "student"
+    left, right = Pipe()
+    left1, right1 = Pipe()
+    for i in range(10):
+        studentName = studentName + str(i+1)
+        filePath = "Exercises Part 2\\Exercise3\\Students\\" + studentName + ".txt"
+        p1 = Process(target=generateRandoms, args=(left, filePath, studentName,))
+        p2 = Process(target=calcAverage, args=(right, left1,))
+        p3 = Process(target=findMax, args=(right1,))
+        p1.start()
+        p2.start()
+        p3.start()
+        p1.join()
+        p2.join()
+        p3.join()
+        studentName = "student"
 
 """
 En este ejercicio debes implementar los siguientes procesos y el Main como se explica a continuación:
