@@ -1,6 +1,5 @@
 from multiprocessing import *
 from random import uniform
-import os
 
 def generateRandoms(connection, filePath, studentName):
     collection = []
@@ -34,9 +33,37 @@ def calcAverage(connection, connection1):
 
 def findMax(connection):
     filePath = connection.recv()
+    doc = open(filePath, "r")
+    lines = doc.readlines()
+    doc.close()
+    averages = []
+    for line in lines:
+        number = ""
+        for char in line:
+            if char.isdigit() or char == ".":
+                number = number + char
+        averages.append(number)
+    maxGrade = 0.0
+    for average in averages:
+        if float(average) > maxGrade:
+            maxGrade = float(average)
+    currentLine = ""
+    for line in lines:
+        currentLine = line
+        number = ""
+        for char in line:
+            if not char.isdigit() and not char == ".":
+                break
+            number = number + str(char)
+        if maxGrade < float(number):
+            maxGrade = float(number)
+    print("Max grade: " + currentLine)
 
 if __name__ == "__main__":
-    os.remove("Exercises Part 2\\Exercise3\\averages.txt")
+    doc = open("Exercises Part 2\\Exercise3\\averages.txt", "w")
+    doc.write("")
+    doc.flush()
+    doc.close()
     filePath = "Exercises Part 2\\Exercise3"
     studentName = "student"
     left, right = Pipe()
