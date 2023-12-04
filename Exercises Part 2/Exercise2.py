@@ -1,5 +1,6 @@
 from multiprocessing import *
 from random import randint
+import time
 
 def randomIp(connection):
     num1 = randint(0, 255)
@@ -36,18 +37,17 @@ def ipClassifier(connection):
     print(ip + " - " + ipClass)
 
 if __name__ == "__main__":
+    startTime = time.time()
+    print("Time:" + str(startTime))
     left, right = Pipe()
     left1, right1 = Pipe()
-    for i in range(100):
+    for i in range(1000):
         p1 = Process(target=randomIp, args=(left,))
         p2 = Process(target=receiveIp, args=(right, left1))
         p3 = Process(target=ipClassifier, args=(right1,))
         p1.start()
         p2.start()
         p3.start()
-        p1.join()
-        p2.join()
-        p3.join()
 
 """
 En este ejercicio vamos a lanzar varios procesos, cuyas entradas y salidas están enlazadas.

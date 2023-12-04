@@ -24,8 +24,10 @@ def calcAverage(connection, connection1):
     for num in numCollection:
         sum = sum + round(float(num))
         count = count + 1
+    if count == 0:
+        count = 1
     average = sum / count
-    filePath = "Exercises Part 2\\Exercise3\\averages.txt"
+    filePath = "Multiprocessing\\Exercises Part 2\\Exercise3\\averages.txt"
     doc = open(filePath, "a")
     doc.write(str(average) + " " + studentName + "\n")
     doc.close()
@@ -60,17 +62,17 @@ def findMax(connection):
     print("Max grade: " + currentLine)
 
 if __name__ == "__main__":
-    doc = open("Exercises Part 2\\Exercise3\\averages.txt", "w")
+    doc = open("Multiprocessing\\Exercises Part 2\\Exercise3\\averages.txt", "w")
     doc.write("")
     doc.flush()
     doc.close()
-    filePath = "Exercises Part 2\\Exercise3"
+    filePath = "Multiprocessing\\Exercises Part 2\\Exercise3"
     studentName = "student"
     left, right = Pipe()
     left1, right1 = Pipe()
     for i in range(10):
         studentName = studentName + str(i+1)
-        filePath = "Exercises Part 2\\Exercise3\\Students\\" + studentName + ".txt"
+        filePath = "Multiprocessing\\Exercises Part 2\\Exercise3\\Students\\" + studentName + ".txt"
         p1 = Process(target=generateRandoms, args=(left, filePath, studentName,))
         p2 = Process(target=calcAverage, args=(right, left1,))
         p3 = Process(target=findMax, args=(right1,))
@@ -78,8 +80,6 @@ if __name__ == "__main__":
         p2.start()
         p3.start()
         p1.join()
-        p2.join()
-        p3.join()
         studentName = "student"
 
 """
