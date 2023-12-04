@@ -27,7 +27,7 @@ def calcAverage(connection, connection1):
     if count == 0:
         count = 1
     average = sum / count
-    filePath = "Multiprocessing\\Exercises Part 2\\Exercise3\\averages.txt"
+    filePath = "Multiprocessing\\Exercises Part 2\\Exercise3\\Averages.txt"
     doc = open(filePath, "a")
     doc.write(str(average) + " " + studentName + "\n")
     doc.close()
@@ -62,12 +62,12 @@ def findMax(connection):
     print("Max grade: " + currentLine)
 
 if __name__ == "__main__":
-    doc = open("Multiprocessing\\Exercises Part 2\\Exercise3\\averages.txt", "w")
+    doc = open("Multiprocessing\\Exercises Part 2\\Exercise3\\Averages.txt", "w")
     doc.write("")
     doc.flush()
     doc.close()
     filePath = "Multiprocessing\\Exercises Part 2\\Exercise3"
-    studentName = "student"
+    studentName = "Student"
     left, right = Pipe()
     left1, right1 = Pipe()
     for i in range(10):
@@ -80,7 +80,7 @@ if __name__ == "__main__":
         p2.start()
         p3.start()
         p1.join()
-        studentName = "student"
+        studentName = "Student"
 
 """
 En este ejercicio debes implementar los siguientes procesos y el Main como se explica a continuación:
