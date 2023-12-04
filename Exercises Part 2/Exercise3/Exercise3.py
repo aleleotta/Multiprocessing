@@ -60,10 +60,9 @@ def findMax(connection):
     print("Max grade: " + currentLine)
 
 if __name__ == "__main__":
-    doc = open("Multiprocessing\\Exercises Part 2\\Exercise3\\Averages.txt", "w")
-    doc.write("")
-    doc.flush()
-    doc.close()
+    with open("Multiprocessing\\Exercises Part 2\\Exercise3\\Averages.txt", "w") as doc:
+        doc.write("")
+        doc.flush()
     filePath = "Multiprocessing\\Exercises Part 2\\Exercise3"
     studentName = "Student"
     left, right = Pipe()
@@ -73,12 +72,11 @@ if __name__ == "__main__":
         filePath = "Multiprocessing\\Exercises Part 2\\Exercise3\\Students\\" + studentName + ".txt"
         p1 = Process(target=generateRandoms, args=(left, filePath, studentName,))
         p2 = Process(target=calcAverage, args=(right, left1,))
-        p3 = Process(target=findMax, args=(right1,))
         p1.start()
         p2.start()
-        p3.start()
-        p1.join()
         studentName = "Student"
+    p3 = Process(target=findMax, args=(right1,))
+    p3.start()
 
 """
 En este ejercicio debes implementar los siguientes procesos y el Main como se explica a continuación:
