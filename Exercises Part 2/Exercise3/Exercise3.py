@@ -16,9 +16,8 @@ def generateRandoms(connection, filePath, studentName):
 def calcAverage(connection, connection1):
     pack = connection.recv()
     filePath, studentName = pack
-    doc = open(filePath, "r")
-    numCollection = doc.readlines()
-    doc.close()
+    with open(filePath, "r") as doc:
+        numCollection = doc.readlines()
     sum = 0
     count = 0
     for num in numCollection:
@@ -28,9 +27,8 @@ def calcAverage(connection, connection1):
         count = 1
     average = sum / count
     filePath = "Multiprocessing\\Exercises Part 2\\Exercise3\\Averages.txt"
-    doc = open(filePath, "a")
-    doc.write(str(average) + " " + studentName + "\n")
-    doc.close()
+    with open(filePath, "a") as doc:
+        doc.write(str(average) + " " + studentName + "\n")
     connection1.send(filePath)
 
 def findMax(connection):
